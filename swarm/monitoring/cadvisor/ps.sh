@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo docker stack ps cadvisor
+sudo docker stack ps cadvisor --no-trunc
