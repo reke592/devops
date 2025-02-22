@@ -13,6 +13,7 @@ services:
   redis:
     image: redis:latest
     deploy:
+      replicas: 1
       placement:
         constraints:
           - "node.hostname == ubuntu1"

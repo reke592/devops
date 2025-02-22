@@ -2,6 +2,12 @@ services:
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - 'node.role == manager'
+          - 'node.hostname == ubuntu1'
     # ports:
     #   - 9090:9090
     command:
@@ -11,6 +17,12 @@ services:
 
   grafana:
     image: grafana/grafana:latest
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - 'node.role == manager'
+          - 'node.hostname == ubuntu1'
     ports:
       - 3000:3000
     environment:
