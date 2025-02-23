@@ -34,7 +34,7 @@
               "barAlignment": 0,
               "barWidthFactor": 0.6,
               "drawStyle": "line",
-              "fillOpacity": 0,
+              "fillOpacity": 20,
               "gradientMode": "none",
               "hideFrom": {
                 "legend": false,
@@ -42,7 +42,7 @@
                 "viz": false
               },
               "insertNulls": false,
-              "lineInterpolation": "linear",
+              "lineInterpolation": "smooth",
               "lineWidth": 1,
               "pointSize": 5,
               "scaleDistribution": {
@@ -71,7 +71,8 @@
                   "value": 80
                 }
               ]
-            }
+            },
+            "unit": "percent"
           },
           "overrides": []
         },
@@ -79,7 +80,7 @@
           "legend": {
             "calcs": [],
             "displayMode": "table",
-            "placement": "right",
+            "placement": "bottom",
             "showLegend": true
           },
           "tooltip": {
@@ -195,14 +196,53 @@
               "mode": "palette-classic"
             },
             "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "barWidthFactor": 0.6,
+              "drawStyle": "line",
+              "fillOpacity": 5,
+              "gradientMode": "none",
               "hideFrom": {
                 "legend": false,
                 "tooltip": false,
                 "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
               }
             },
             "fieldMinMax": false,
             "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
             "unit": "bytes"
           },
           "overrides": [
@@ -223,23 +263,11 @@
           ]
         },
         "options": {
-          "displayLabels": [],
           "legend": {
+            "calcs": [],
             "displayMode": "table",
-            "placement": "right",
-            "showLegend": true,
-            "values": [
-              "value",
-              "percent"
-            ]
-          },
-          "pieType": "pie",
-          "reduceOptions": {
-            "calcs": [
-              "lastNotNull"
-            ],
-            "fields": "",
-            "values": false
+            "placement": "bottom",
+            "showLegend": true
           },
           "tooltip": {
             "hideZeros": false,
@@ -254,35 +282,22 @@
               "type": "prometheus",
               "uid": "fedt5ns4o1jb4a"
             },
-            "editorMode": "code",
-            "expr": "sum(machine_memory_bytes) - sum(container_memory_rss{image!=\"\"})",
-            "hide": false,
-            "instant": false,
-            "legendFormat": "FREE",
-            "range": true,
-            "refId": "B"
-          },
-          {
-            "datasource": {
-              "type": "prometheus",
-              "uid": "fedt5ns4o1jb4a"
-            },
             "disableTextWrap": false,
             "editorMode": "code",
             "exemplar": false,
-            "expr": "sum(container_memory_rss{image!=\"\"}) by (name)",
+            "expr": "sum(container_memory_rss{image!=\"\"} unless (time() - container_last_seen > 30)) by (name)",
             "fullMetaSearch": false,
             "hide": false,
             "includeNullMetadata": true,
             "instant": false,
             "legendFormat": "__auto",
             "range": true,
-            "refId": "A",
+            "refId": "Total Usage per Container",
             "useBackend": false
           }
         ],
         "title": "Container Memory RSS",
-        "type": "piechart"
+        "type": "timeseries"
       }
     }
   },
@@ -414,7 +429,7 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "100 * (sum (container_memory_rss{image!=\"\"}) / sum(machine_memory_bytes))",
+          "expr": "100 * (sum(container_memory_rss{image!=\"\"} unless (time() - container_last_seen > 15))) / sum(machine_memory_bytes)",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A",
@@ -557,20 +572,20 @@
       "type": "piechart"
     }
   ],
-  "refresh": "",
+  "refresh": "5s",
   "schemaVersion": 40,
   "tags": [],
   "templating": {
     "list": []
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "Manager Node",
   "uid": "aedt6nmken6rka",
-  "version": 29,
+  "version": 31,
   "weekStart": ""
 }

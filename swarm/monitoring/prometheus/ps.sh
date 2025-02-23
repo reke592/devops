@@ -1,3 +1,3 @@
 #!/bin/bash
 
-sudo docker compose ps
+sudo docker stack ps prometheus

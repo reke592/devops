@@ -14,6 +14,7 @@ services:
       - --config.file=/etc/prometheus/prometheus.yaml
     volumes:
       - ./prometheus.yaml:/etc/prometheus/prometheus.yaml:ro
+      - prometheus_data:/prometheus
 
   grafana:
     image: grafana/grafana:latest
@@ -32,4 +33,6 @@ services:
 
 volumes:
   grafana_data:
+    external: true
+  prometheus_data:
     external: true
