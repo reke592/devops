@@ -1,0 +1,24 @@
+services:
+  mysql:
+    image: mysql:8.0.41
+    volumes:
+      - mysql_data:/var/lib/mysql
+    secrets:
+      - source: mysql_root_passwd
+        target: /var/run/MYSQL_ROOT_PASSWD
+      - source: mysql_admin_passwd
+        target: /var/run/MYSQL_ADMIN_PASSWD
+    environment:
+      - DATABASE=sample
+      - MYSQL_ROOT_PASSWORD_FILE=/var/run/MYSQL_ROOT_PASSWD
+      - MYSQL_ADMIN_PASSWORD_FILE=/var/run/MYSQL_ADMIN_PASSWD
+volumes:
+  mysql_data:
+
+secrets:
+  mysql_root_passwd:
+    name: $STACK_NAME_mysql_root_passwd
+    file: ./secrets/mysql_root_passwd
+  mysql_admin_passwd:
+    name: $STACK_NAME_mysql_admin_passwd
+    file: ./secrets/mysql_admin_passwd

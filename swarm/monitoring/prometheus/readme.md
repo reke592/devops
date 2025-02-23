@@ -1,3 +1,3 @@
-This service needs to be in dedicated server.
+This service needs to be in dedicated server due to resource usage.
 
-better to run this manually using `docker-compose up -d`.
+better to run this manually using `docker compose up -d`.
