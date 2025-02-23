@@ -78,7 +78,11 @@
         },
         "options": {
           "legend": {
-            "calcs": [],
+            "calcs": [
+              "min",
+              "max",
+              "lastNotNull"
+            ],
             "displayMode": "table",
             "placement": "bottom",
             "showLegend": true
@@ -110,6 +114,74 @@
         ],
         "title": "Container CPU Usage",
         "type": "timeseries"
+      }
+    },
+    "cedulqs64awowc": {
+      "name": "Disk Usage Percentage",
+      "uid": "cedulqs64awowc",
+      "kind": 1,
+      "model": {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "min": -4,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "percent"
+          },
+          "overrides": []
+        },
+        "options": {
+          "minVizHeight": 75,
+          "minVizWidth": 75,
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true,
+          "sizing": "auto"
+        },
+        "pluginVersion": "11.5.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "fedt5ns4o1jb4a"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "100 * (sum (container_fs_usage_bytes{device!~'/dev/mapper/.*'}) by (device) / sum (container_fs_limit_bytes) by (device))",
+            "legendFormat": "__auto",
+            "range": true,
+            "refId": "A"
+          }
+        ],
+        "title": "Disk Usage Percentage",
+        "type": "gauge"
       }
     },
     "eedulrni2y9s0e": {
@@ -205,8 +277,10 @@
               "lastNotNull"
             ],
             "displayMode": "table",
-            "placement": "right",
-            "showLegend": true
+            "placement": "bottom",
+            "showLegend": true,
+            "sortBy": "Last *",
+            "sortDesc": true
           },
           "tooltip": {
             "hideZeros": false,
@@ -250,74 +324,6 @@
         ],
         "title": "Container Memory RSS",
         "type": "timeseries"
-      }
-    },
-    "cedulqs64awowc": {
-      "name": "Disk Usage Percentage",
-      "uid": "cedulqs64awowc",
-      "kind": 1,
-      "model": {
-        "datasource": {
-          "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
-        },
-        "description": "",
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "thresholds"
-            },
-            "mappings": [],
-            "min": -4,
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            },
-            "unit": "percent"
-          },
-          "overrides": []
-        },
-        "options": {
-          "minVizHeight": 75,
-          "minVizWidth": 75,
-          "orientation": "auto",
-          "reduceOptions": {
-            "calcs": [
-              "lastNotNull"
-            ],
-            "fields": "",
-            "values": false
-          },
-          "showThresholdLabels": false,
-          "showThresholdMarkers": true,
-          "sizing": "auto"
-        },
-        "pluginVersion": "11.5.2",
-        "targets": [
-          {
-            "datasource": {
-              "type": "prometheus",
-              "uid": "fedt5ns4o1jb4a"
-            },
-            "editorMode": "code",
-            "exemplar": false,
-            "expr": "100 * (sum (container_fs_usage_bytes{device!~'/dev/mapper/.*'}) by (device) / sum (container_fs_limit_bytes) by (device))",
-            "legendFormat": "__auto",
-            "range": true,
-            "refId": "A"
-          }
-        ],
-        "title": "Disk Usage Percentage",
-        "type": "gauge"
       }
     }
   },
@@ -370,112 +376,6 @@
   "links": [],
   "panels": [
     {
-      "gridPos": {
-        "h": 9,
-        "w": 24,
-        "x": 0,
-        "y": 0
-      },
-      "id": 1,
-      "libraryPanel": {
-        "uid": "bedulredabf9ce",
-        "name": "Container CPU Usage"
-      }
-    },
-    {
-      "gridPos": {
-        "h": 9,
-        "w": 21,
-        "x": 0,
-        "y": 9
-      },
-      "id": 2,
-      "libraryPanel": {
-        "uid": "eedulrni2y9s0e",
-        "name": "Container Memory RSS"
-      }
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 3,
-        "x": 21,
-        "y": 9
-      },
-      "id": 6,
-      "options": {
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto"
-      },
-      "pluginVersion": "11.5.2",
-      "targets": [
-        {
-          "editorMode": "code",
-          "expr": "100 * (sum(container_memory_rss{image!=\"\"} unless (time() - container_last_seen > 15))) / sum(machine_memory_bytes)",
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
-        }
-      ],
-      "title": "Total Memory Usage",
-      "type": "gauge"
-    },
-    {
-      "gridPos": {
-        "h": 9,
-        "w": 13,
-        "x": 0,
-        "y": 18
-      },
-      "id": 4,
-      "libraryPanel": {
-        "uid": "cedulqs64awowc",
-        "name": "Disk Usage Percentage"
-      }
-    },
-    {
       "datasource": {
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
@@ -514,17 +414,17 @@
         ]
       },
       "gridPos": {
-        "h": 9,
-        "w": 11,
-        "x": 13,
-        "y": 18
+        "h": 12,
+        "w": 9,
+        "x": 0,
+        "y": 0
       },
       "id": 5,
       "options": {
         "displayLabels": [],
         "legend": {
           "displayMode": "table",
-          "placement": "right",
+          "placement": "bottom",
           "showLegend": true,
           "values": [
             "percent",
@@ -575,6 +475,112 @@
       ],
       "title": "Container FS Usage - Overlay",
       "type": "piechart"
+    },
+    {
+      "gridPos": {
+        "h": 12,
+        "w": 15,
+        "x": 9,
+        "y": 0
+      },
+      "id": 1,
+      "libraryPanel": {
+        "uid": "bedulredabf9ce",
+        "name": "Container CPU Usage"
+      }
+    },
+    {
+      "gridPos": {
+        "h": 11,
+        "w": 5,
+        "x": 0,
+        "y": 12
+      },
+      "id": 4,
+      "libraryPanel": {
+        "uid": "cedulqs64awowc",
+        "name": "Disk Usage Percentage"
+      }
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 4,
+        "x": 5,
+        "y": 12
+      },
+      "id": 6,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "11.5.2",
+      "targets": [
+        {
+          "editorMode": "code",
+          "expr": "100 * (sum(container_memory_rss{image!=\"\"} unless (time() - container_last_seen > 15))) / sum(machine_memory_bytes)",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          }
+        }
+      ],
+      "title": "Total Memory Usage",
+      "type": "gauge"
+    },
+    {
+      "gridPos": {
+        "h": 11,
+        "w": 15,
+        "x": 9,
+        "y": 12
+      },
+      "id": 2,
+      "libraryPanel": {
+        "uid": "eedulrni2y9s0e",
+        "name": "Container Memory RSS"
+      }
     }
   ],
   "refresh": "5s",
@@ -591,6 +597,6 @@
   "timezone": "browser",
   "title": "Manager Node",
   "uid": "aedt6nmken6rka",
-  "version": 33,
+  "version": 40,
   "weekStart": ""
 }
