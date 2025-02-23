@@ -132,7 +132,10 @@
               "axisCenteredZero": false,
               "axisColorMode": "text",
               "axisLabel": "",
-              "axisPlacement": "hidden",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "barWidthFactor": 0.6,
+              "drawStyle": "line",
               "fillOpacity": 50,
               "gradientMode": "none",
               "hideFrom": {
@@ -140,9 +143,21 @@
                 "tooltip": false,
                 "viz": false
               },
+              "insertNulls": false,
+              "lineInterpolation": "smooth",
+              "lineStyle": {
+                "fill": "solid"
+              },
               "lineWidth": 1,
+              "pointSize": 5,
               "scaleDistribution": {
                 "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "normal"
               },
               "thresholdsStyle": {
                 "mode": "off"
@@ -183,10 +198,6 @@
           ]
         },
         "options": {
-          "barRadius": 0,
-          "barWidth": 0.9,
-          "fullHighlight": false,
-          "groupWidth": 0.7,
           "legend": {
             "calcs": [
               "min",
@@ -197,16 +208,11 @@
             "placement": "right",
             "showLegend": true
           },
-          "orientation": "auto",
-          "showValue": "never",
-          "stacking": "normal",
           "tooltip": {
             "hideZeros": false,
             "mode": "single",
             "sort": "none"
-          },
-          "xTickLabelRotation": 0,
-          "xTickLabelSpacing": 0
+          }
         },
         "pluginVersion": "11.5.2",
         "targets": [
@@ -243,7 +249,7 @@
           }
         ],
         "title": "Container Memory RSS",
-        "type": "barchart"
+        "type": "timeseries"
       }
     },
     "cedulqs64awowc": {
@@ -492,21 +498,6 @@
         },
         "overrides": [
           {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "{device=\"overlay\", id=\"/\", instance=\"192.168.254.104:12345\", job=\"cadvisor\"}"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": []
-          },
-          {
             "matcher": {
               "id": "byName",
               "options": "FREE"
@@ -593,13 +584,13 @@
     "list": []
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "Manager Node",
   "uid": "aedt6nmken6rka",
-  "version": 32,
+  "version": 33,
   "weekStart": ""
 }
