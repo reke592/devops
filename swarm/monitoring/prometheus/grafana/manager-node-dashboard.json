@@ -111,120 +111,6 @@
         "type": "timeseries"
       }
     },
-    "eedulrni2y9s0e": {
-      "name": "Container Memory RSS",
-      "uid": "eedulrni2y9s0e",
-      "kind": 1,
-      "model": {
-        "datasource": {
-          "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
-        },
-        "description": "",
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "axisBorderShow": false,
-              "axisCenteredZero": false,
-              "axisColorMode": "text",
-              "axisLabel": "",
-              "axisPlacement": "auto",
-              "barAlignment": 0,
-              "barWidthFactor": 0.6,
-              "drawStyle": "line",
-              "fillOpacity": 0,
-              "gradientMode": "none",
-              "hideFrom": {
-                "legend": false,
-                "tooltip": false,
-                "viz": false
-              },
-              "insertNulls": false,
-              "lineInterpolation": "linear",
-              "lineWidth": 1,
-              "pointSize": 5,
-              "scaleDistribution": {
-                "type": "linear"
-              },
-              "showPoints": "auto",
-              "spanNulls": false,
-              "stacking": {
-                "group": "A",
-                "mode": "none"
-              },
-              "thresholdsStyle": {
-                "mode": "off"
-              }
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            },
-            "unit": "bytes"
-          },
-          "overrides": []
-        },
-        "options": {
-          "legend": {
-            "calcs": [],
-            "displayMode": "table",
-            "placement": "right",
-            "showLegend": true
-          },
-          "tooltip": {
-            "hideZeros": false,
-            "mode": "single",
-            "sort": "none"
-          }
-        },
-        "pluginVersion": "11.5.2",
-        "targets": [
-          {
-            "datasource": {
-              "type": "prometheus",
-              "uid": "fedt5ns4o1jb4a"
-            },
-            "disableTextWrap": false,
-            "editorMode": "code",
-            "expr": "sum (container_memory_rss{image!=\"\"}) by (name)",
-            "fullMetaSearch": false,
-            "includeNullMetadata": true,
-            "legendFormat": "{{container_label_com_docker_stack_namespace}}",
-            "range": true,
-            "refId": "A",
-            "useBackend": false
-          },
-          {
-            "datasource": {
-              "type": "prometheus",
-              "uid": "fedt5ns4o1jb4a"
-            },
-            "editorMode": "code",
-            "expr": "sum(machine_memory_bytes)",
-            "hide": false,
-            "instant": false,
-            "legendFormat": "Machine Memory",
-            "range": true,
-            "refId": "B"
-          }
-        ],
-        "title": "Container Memory RSS",
-        "type": "timeseries"
-      }
-    },
     "cedulqs64awowc": {
       "name": "Disk Usage Percentage",
       "uid": "cedulqs64awowc",
@@ -292,9 +178,121 @@
         "title": "Disk Usage Percentage",
         "type": "gauge"
       }
+    },
+    "eedulrni2y9s0e": {
+      "name": "Container Memory RSS",
+      "uid": "eedulrni2y9s0e",
+      "kind": 1,
+      "model": {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              }
+            },
+            "fieldMinMax": false,
+            "mappings": [],
+            "unit": "bytes"
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "FREE"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "options": {
+          "displayLabels": [],
+          "legend": {
+            "displayMode": "table",
+            "placement": "right",
+            "showLegend": true,
+            "values": [
+              "value",
+              "percent"
+            ]
+          },
+          "pieType": "pie",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "tooltip": {
+            "hideZeros": false,
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "11.5.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "fedt5ns4o1jb4a"
+            },
+            "editorMode": "code",
+            "expr": "sum(machine_memory_bytes) - sum(container_memory_rss{image!=\"\"})",
+            "hide": false,
+            "instant": false,
+            "legendFormat": "FREE",
+            "range": true,
+            "refId": "B"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "fedt5ns4o1jb4a"
+            },
+            "disableTextWrap": false,
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "sum(container_memory_rss{image!=\"\"}) by (name)",
+            "fullMetaSearch": false,
+            "hide": false,
+            "includeNullMetadata": true,
+            "instant": false,
+            "legendFormat": "__auto",
+            "range": true,
+            "refId": "A",
+            "useBackend": false
+          }
+        ],
+        "title": "Container Memory RSS",
+        "type": "piechart"
+      }
     }
   },
   "__requires": [
+    {
+      "type": "panel",
+      "id": "gauge",
+      "name": "Gauge",
+      "version": ""
+    },
     {
       "type": "grafana",
       "id": "grafana",
@@ -339,7 +337,7 @@
     {
       "gridPos": {
         "h": 9,
-        "w": 12,
+        "w": 13,
         "x": 0,
         "y": 0
       },
@@ -347,6 +345,99 @@
       "libraryPanel": {
         "uid": "bedulredabf9ce",
         "name": "Container CPU Usage"
+      }
+    },
+    {
+      "gridPos": {
+        "h": 9,
+        "w": 11,
+        "x": 13,
+        "y": 0
+      },
+      "id": 4,
+      "libraryPanel": {
+        "uid": "cedulqs64awowc",
+        "name": "Disk Usage Percentage"
+      }
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 3,
+        "x": 0,
+        "y": 9
+      },
+      "id": 6,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "11.5.2",
+      "targets": [
+        {
+          "editorMode": "code",
+          "expr": "100 * (sum (container_memory_rss{image!=\"\"}) / sum(machine_memory_bytes))",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          }
+        }
+      ],
+      "title": "Total Memory Usage",
+      "type": "gauge"
+    },
+    {
+      "gridPos": {
+        "h": 9,
+        "w": 10,
+        "x": 3,
+        "y": 9
+      },
+      "id": 2,
+      "libraryPanel": {
+        "uid": "eedulrni2y9s0e",
+        "name": "Container Memory RSS"
       }
     },
     {
@@ -385,26 +476,39 @@
               }
             },
             "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "FREE"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed"
+                }
+              }
+            ]
           }
         ]
       },
       "gridPos": {
         "h": 9,
-        "w": 12,
-        "x": 12,
-        "y": 0
+        "w": 11,
+        "x": 13,
+        "y": 9
       },
       "id": 5,
       "options": {
-        "displayLabels": [
-          "value"
-        ],
+        "displayLabels": [],
         "legend": {
           "displayMode": "table",
           "placement": "right",
           "showLegend": true,
           "values": [
-            "percent"
+            "percent",
+            "value"
           ]
         },
         "pieType": "pie",
@@ -444,39 +548,13 @@
           "expr": "container_fs_limit_bytes{device='overlay'} / 1024 / 1024 - container_fs_usage_bytes{device='overlay'} / 1024 / 1024",
           "hide": false,
           "instant": false,
-          "legendFormat": "remaining {{device}}",
+          "legendFormat": "FREE",
           "range": true,
           "refId": "C"
         }
       ],
       "title": "Container FS Usage - Overlay",
       "type": "piechart"
-    },
-    {
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 0,
-        "y": 9
-      },
-      "id": 2,
-      "libraryPanel": {
-        "uid": "eedulrni2y9s0e",
-        "name": "Container Memory RSS"
-      }
-    },
-    {
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 12,
-        "y": 9
-      },
-      "id": 4,
-      "libraryPanel": {
-        "uid": "cedulqs64awowc",
-        "name": "Disk Usage Percentage"
-      }
     }
   ],
   "refresh": "",
@@ -486,13 +564,13 @@
     "list": []
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "Manager Node",
   "uid": "aedt6nmken6rka",
-  "version": 21,
+  "version": 29,
   "weekStart": ""
 }
